@@ -6,6 +6,9 @@ services:
     image: postgres:17.2
     container_name: bd-swing
     restart: always
+    volumes:
+      - ./db/create-schema.sql:/docker-entrypoint-initdb.d/create-schema.sql
+      - ./db/data.sql:/docker-entrypoint-initdb.d/data.sql
     environment:
       - POSTGRES_DB=bd_swing
       - POSTGRES_USER=admin
