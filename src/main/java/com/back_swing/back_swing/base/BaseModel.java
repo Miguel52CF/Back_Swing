@@ -19,6 +19,7 @@ import lombok.experimental.SuperBuilder;
 public abstract class BaseModel implements Persistable<Long> {
 
   @Id
+  private Long id;
 
   private boolean active = true;
 
