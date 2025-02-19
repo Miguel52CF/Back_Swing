@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -22,34 +23,26 @@ public class defaultSecurityFilterChainProtected {
   private String ADMIN_ROLE;
 
   @Bean
-  SecurityFilterChain defaultSecurityFilterChainProtected(HttpSecurity http) throws Exception {
-    http.cors(
-        (cors) -> {
-          cors.disable();
-        })
-        .csrf(
-            (csrf) -> {
-              csrf.disable();
-            })
-        .authorizeHttpRequests(
-            (auth) -> {
-              auth.requestMatchers(new AntPathRequestMatcher("/"))
-                  .permitAll()
-                  .requestMatchers(new AntPathRequestMatcher("/api/**"))
-                  .hasAnyRole(TEACHER_ROLE, STUDENT_ROLE, ADMIN_ROLE)
-                  .requestMatchers(new AntPathRequestMatcher("/admin/**"))
-                  .hasAnyRole(ADMIN_ROLE)
-                  .anyRequest()
-                  .permitAll();
-            })
-        .formLogin(
-            (login -> {
-              login.usernameParameter("email");
-            }))
-        .logout(
-            logout -> {
-              logout.invalidateHttpSession(true).clearAuthentication(true);
-            });
+  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .cors(cors -> cors.disable())
+        .csrf(csrf -> csrf.disable())
+        .sessionManagement(session -> session
+            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+            .requestMatchers(new AntPathRequestMatcher("/api/**")).hasAnyRole(TEACHER_ROLE, STUDENT_ROLE, ADMIN_ROLE)
+            .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole(ADMIN_ROLE)
+            .anyRequest().permitAll())
+        .formLogin(form -> form
+            .loginPage("/login")
+            .usernameParameter("email")
+            .permitAll())
+        .logout(logout -> logout // Esto ya no estará tachado
+            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            .invalidateHttpSession(true)
+            .clearAuthentication(true)
+            .permitAll());
 
     return http.build();
   }
