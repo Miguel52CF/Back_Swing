@@ -10,55 +10,57 @@ import javax.crypto.NoSuchPaddingException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+import reactor.core.publisher.Mono;
+
+@RestControllerAdvice
 public class GlobalExceptionHandler {
-  
+
   @ExceptionHandler(ObjectNotFoundException.class)
-  public ResponseEntity<String> handleObjectNotFound(ObjectNotFoundException exception) {
-    return new ResponseEntity<>("Error: Object not found.", HttpStatus.NOT_FOUND);
+  public Mono<ResponseEntity<String>> handleObjectNotFound(ObjectNotFoundException exception) {
+    return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Object not found."));
   }
 
   @ExceptionHandler(NullPointerException.class)
-  public ResponseEntity<String> handleNull(NullPointerException exception) {
-    return new ResponseEntity<>("Error: Incomplete information.", HttpStatus.NOT_ACCEPTABLE);
+  public Mono<ResponseEntity<String>> handleNull(NullPointerException exception) {
+    return Mono.just(ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Error: Incomplete information."));
   }
 
   @ExceptionHandler(NumberFormatException.class)
-  public ResponseEntity<String> handleNumberFormat(NumberFormatException exception) {
-    return new ResponseEntity<>("Error: Wrong format request.", HttpStatus.BAD_REQUEST);
+  public Mono<ResponseEntity<String>> handleNumberFormat(NumberFormatException exception) {
+    return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Wrong format request."));
   }
 
   @ExceptionHandler(InvalidKeyException.class)
-  public ResponseEntity<String> handleInvalidKey(InvalidKeyException exception) {
-    return new ResponseEntity<>("Error: Invalid information.", HttpStatus.BAD_REQUEST);
+  public Mono<ResponseEntity<String>> handleInvalidKey(InvalidKeyException exception) {
+    return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Invalid information."));
   }
 
   @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-  public ResponseEntity<String> handleSQLIntegrityConstraintViolation(SQLIntegrityConstraintViolationException exception) {
-    return new ResponseEntity<>("Error: Not valid information.", HttpStatus.BAD_REQUEST);
+  public Mono<ResponseEntity<String>> handleSQLIntegrityConstraintViolation(
+      SQLIntegrityConstraintViolationException exception) {
+    return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Not valid information."));
   }
 
   @ExceptionHandler(NoSuchAlgorithmException.class)
-  public ResponseEntity<String> handleNoSuchAlgorithm(NoSuchAlgorithmException exception) {
-    return new ResponseEntity<>("Error: Suitable information not found.", HttpStatus.NO_CONTENT);
+  public Mono<ResponseEntity<String>> handleNoSuchAlgorithm(NoSuchAlgorithmException exception) {
+    return Mono.just(ResponseEntity.status(HttpStatus.NO_CONTENT).body("Error: Suitable information not found."));
   }
 
   @ExceptionHandler(NoSuchPaddingException.class)
-  public ResponseEntity<String> handleNoSuchPadding(NoSuchPaddingException exception) {
-    return new ResponseEntity<>("Error: Not such information.", HttpStatus.NOT_ACCEPTABLE);
+  public Mono<ResponseEntity<String>> handleNoSuchPadding(NoSuchPaddingException exception) {
+    return Mono.just(ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Error: Not such information."));
   }
 
   @ExceptionHandler(IllegalBlockSizeException.class)
-  public ResponseEntity<String> handleIllegalBlockSize(IllegalBlockSizeException exception) {
-    return new ResponseEntity<>("Error: Illegal size.", HttpStatus.NOT_ACCEPTABLE);
+  public Mono<ResponseEntity<String>> handleIllegalBlockSize(IllegalBlockSizeException exception) {
+    return Mono.just(ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Error: Illegal size."));
   }
 
   @ExceptionHandler(BadPaddingException.class)
-  public ResponseEntity<String> handleBadPadding(BadPaddingException exception) {
-    return new ResponseEntity<>("Error: Bad Pad information.", HttpStatus.NOT_ACCEPTABLE);
+  public Mono<ResponseEntity<String>> handleBadPadding(BadPaddingException exception) {
+    return Mono.just(ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Error: Bad Pad information."));
   }
-
 }
