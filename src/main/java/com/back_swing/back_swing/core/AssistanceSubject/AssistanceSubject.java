@@ -4,6 +4,8 @@ import java.time.Instant;
 
 import org.springframework.data.relational.core.mapping.Table;
 
+import com.back_swing.back_swing.base.BaseModel;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @Table("assistances_subjects")
-public class AssistanceSubject {
+public class AssistanceSubject extends BaseModel{
     
     @NotNull
     private Long userId;
