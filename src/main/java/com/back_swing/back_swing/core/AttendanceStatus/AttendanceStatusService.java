@@ -2,15 +2,16 @@ package com.back_swing.back_swing.core.AttendanceStatus;
 
 import org.springframework.stereotype.Service;
 
+import com.back_swing.back_swing.base.BaseRepository;
 import com.back_swing.back_swing.base.BaseService;
 
 import reactor.core.publisher.Mono;
 
 @Service
-public class AttendanceStatusService extends BaseService<AttendanceStatus, AttendanceStatusDTO>{
+public class AttendanceStatusService extends BaseService<AttendanceStatus, Long>{
 
-    public AttendanceStatusService(AttendanceStatusRepository attendanceStatusRepository) {
-        super(attendanceStatusRepository, AttendanceStatus.class);
+    public AttendanceStatusService(BaseRepository<AttendanceStatus, Long> baseRepository) {
+        super(baseRepository);
     }
 
     @Override

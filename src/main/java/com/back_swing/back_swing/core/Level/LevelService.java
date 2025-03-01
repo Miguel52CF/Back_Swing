@@ -2,15 +2,16 @@ package com.back_swing.back_swing.core.Level;
 
 import org.springframework.stereotype.Service;
 
+import com.back_swing.back_swing.base.BaseRepository;
 import com.back_swing.back_swing.base.BaseService;
 
 import reactor.core.publisher.Mono;
 
 @Service
-public class LevelService extends BaseService<Level, LevelDTO>{
+public class LevelService extends BaseService<Level, Long>{
 
-    public LevelService(LevelRepository levelRepository){
-        super(levelRepository, Level.class);
+    public LevelService(BaseRepository<Level, Long> baseRepository) {
+        super(baseRepository);
     }
 
     @Override

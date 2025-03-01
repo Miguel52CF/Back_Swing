@@ -2,15 +2,16 @@ package com.back_swing.back_swing.core.MonthlyFee;
 
 import org.springframework.stereotype.Service;
 
+import com.back_swing.back_swing.base.BaseRepository;
 import com.back_swing.back_swing.base.BaseService;
 
 import reactor.core.publisher.Mono;
 
 @Service
-public class MonthlyFeeService extends BaseService<MonthlyFee, MonthlyFeeDTO>{
+public class MonthlyFeeService extends BaseService<MonthlyFee, Long>{
     
-    public MonthlyFeeService(MonthlyFeeRepository monthlyFeeRepository){
-        super(monthlyFeeRepository, MonthlyFee.class);
+    public MonthlyFeeService(BaseRepository<MonthlyFee, Long> baseRepository) {
+        super(baseRepository);
     }
 
     @Override

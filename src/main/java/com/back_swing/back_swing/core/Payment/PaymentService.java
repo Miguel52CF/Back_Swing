@@ -2,15 +2,16 @@ package com.back_swing.back_swing.core.Payment;
 
 import org.springframework.stereotype.Service;
 
+import com.back_swing.back_swing.base.BaseRepository;
 import com.back_swing.back_swing.base.BaseService;
 
 import reactor.core.publisher.Mono;
 
 @Service
-public class PaymentService extends BaseService<Payment, PaymentDTO>{
+public class PaymentService extends BaseService<Payment, Long>{
 
-    public PaymentService(PaymentRepository paymentRepository){
-        super(paymentRepository, Payment.class);
+    public PaymentService(BaseRepository<Payment, Long> baseRepository) {
+        super(baseRepository);
     }
 
     @Override

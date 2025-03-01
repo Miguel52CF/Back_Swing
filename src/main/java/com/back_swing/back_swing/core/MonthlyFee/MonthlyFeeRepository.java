@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import com.back_swing.back_swing.base.BaseRepository;
 
 @Repository
-public interface MonthlyFeeRepository extends BaseRepository<MonthlyFee, MonthlyFeeDTO>{
+public interface MonthlyFeeRepository extends BaseRepository<MonthlyFee, Long>{
 }

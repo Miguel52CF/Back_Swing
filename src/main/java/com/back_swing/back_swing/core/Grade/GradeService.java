@@ -2,15 +2,16 @@ package com.back_swing.back_swing.core.Grade;
 
 import org.springframework.stereotype.Service;
 
+import com.back_swing.back_swing.base.BaseRepository;
 import com.back_swing.back_swing.base.BaseService;
 
 import reactor.core.publisher.Mono;
 
 @Service
-public class GradeService extends BaseService<Grade, GradeDTO>{
+public class GradeService extends BaseService<Grade, Long>{
 
-    public GradeService(GradeRepository gradeRepository) {
-        super(gradeRepository, Grade.class);
+    public GradeService(BaseRepository<Grade, Long> baseRepository) {
+        super(baseRepository);
     }
 
     @Override

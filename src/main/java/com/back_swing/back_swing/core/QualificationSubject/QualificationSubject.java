@@ -3,13 +3,15 @@ package com.back_swing.back_swing.core.QualificationSubject;
 import org.springframework.data.relational.core.mapping.Table;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table("qualification_subjects")
 public class QualificationSubject {
 

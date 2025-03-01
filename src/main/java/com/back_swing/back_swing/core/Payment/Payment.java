@@ -6,13 +6,15 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import com.back_swing.back_swing.base.BaseModel;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table("payments")
 public class Payment extends BaseModel {
 

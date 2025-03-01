@@ -2,15 +2,16 @@ package com.back_swing.back_swing.core.User;
 
 import org.springframework.stereotype.Service;
 
+import com.back_swing.back_swing.base.BaseRepository;
 import com.back_swing.back_swing.base.BaseService;
 
 import reactor.core.publisher.Mono;
 
 @Service
-public class UserService extends BaseService<User, UserDTO>{
+public class UserService extends BaseService<User, Long>{
 
-    public UserService(UserRepository userRepository){
-        super(userRepository, User.class);
+    public UserService(BaseRepository<User, Long> baseRepository) {
+        super(baseRepository);
     }
 
     @Override
