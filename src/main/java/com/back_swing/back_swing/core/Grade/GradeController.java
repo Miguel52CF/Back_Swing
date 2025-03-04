@@ -11,16 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.back_swing.back_swing.exceptions.ObjectNotFoundException;
 import com.back_swing.back_swing.utils.ResponseController;
 
-import lombok.AllArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/v1/grade")
 public class GradeController {
     
     private final GradeService gradeService;
+
+    public GradeController(GradeService gradeService){
+        this.gradeService = gradeService;
+    }
 
     @GetMapping
     public Flux<Map<String, Object>> listAllGrades(){

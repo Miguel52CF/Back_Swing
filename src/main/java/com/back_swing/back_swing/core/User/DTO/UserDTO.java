@@ -1,4 +1,4 @@
-package com.back_swing.back_swing.core.User;
+package com.back_swing.back_swing.core.User.DTO;
 
 public record UserDTO(
     Long id,

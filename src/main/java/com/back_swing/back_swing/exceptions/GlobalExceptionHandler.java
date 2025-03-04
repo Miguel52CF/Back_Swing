@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
+  
   @ExceptionHandler(BadRequestException.class)
   public Mono<ResponseEntity<Map<String, Object>>> handleBadRequest(BadRequestException exception) {
     return buildErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage());

@@ -1,27 +1,19 @@
 package com.back_swing.back_swing.exceptions;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-public class ObjectNotFoundException extends RuntimeException {
-
-    private final HttpStatus status;
+public class ObjectNotFoundException extends ResponseStatusException {
 
     public ObjectNotFoundException(String message) {
-        super(message);
-        this.status = HttpStatus.NOT_FOUND; // Código de estado por defecto
+        super(HttpStatus.NOT_FOUND, message);
     }
 
     public ObjectNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-        this.status = HttpStatus.NOT_FOUND;
+        super(HttpStatus.NOT_FOUND, message, cause);
     }
 
     public ObjectNotFoundException(String message, HttpStatus status) {
-        super(message);
-        this.status = status; // Permite definir un código de estado personalizado
-    }
-
-    public HttpStatus getStatus() {
-        return status;
+        super(status, message);
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.back_swing.back_swing.base.BaseRepository;
 import com.back_swing.back_swing.base.BaseService;
+import com.back_swing.back_swing.exceptions.ObjectNotFoundException;
 
 import reactor.core.publisher.Mono;
 
@@ -16,11 +17,11 @@ public class UserService extends BaseService<User, Long>{
 
     @Override
     public Mono<Void> delete(Long id) {
-        Mono<User> user = findById(id)
-            .map(u -> {
-                u.setActive(false);
-                return u;
-            });
-            return user.flatMap(this::save).then();
+        return findById(id)
+            .switchIfEmpty(Mono.error(new ObjectNotFoundException("User not found")))
+            .flatMap(user -> {
+                user.setActive(false);
+                return save(user);
+            }).then();
     }
 }
