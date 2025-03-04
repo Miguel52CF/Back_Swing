@@ -3,6 +3,7 @@ package com.back_swing.back_swing.exceptions;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Map;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -13,54 +14,75 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.back_swing.back_swing.utils.ResponseException;
+
 import reactor.core.publisher.Mono;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+  
+  @ExceptionHandler(BadRequestException.class)
+  public Mono<ResponseEntity<Map<String, Object>>> handleBadRequest(BadRequestException exception) {
+    return buildErrorResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
+  }
 
   @ExceptionHandler(ObjectNotFoundException.class)
-  public Mono<ResponseEntity<String>> handleObjectNotFound(ObjectNotFoundException exception) {
-    return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Object not found."));
+  public Mono<ResponseEntity<Map<String, Object>>> handleObjectNotFound(ObjectNotFoundException exception) {
+    return buildErrorResponse(HttpStatus.NOT_FOUND, exception.getMessage());
+  }
+
+  @ExceptionHandler(DatabaseException.class)
+  public Mono<ResponseEntity<Map<String, Object>>> handleDatabaseException(DatabaseException exception) {
+    return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,"Ocurrió un error inesperado.");
   }
 
   @ExceptionHandler(NullPointerException.class)
-  public Mono<ResponseEntity<String>> handleNull(NullPointerException exception) {
-    return Mono.just(ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Error: Incomplete information."));
+  public Mono<ResponseEntity<Map<String, Object>>> handleNull(NullPointerException exception) {
+    return buildErrorResponse(HttpStatus.NOT_ACCEPTABLE, "Error: Incomplete information.");
   }
 
   @ExceptionHandler(NumberFormatException.class)
-  public Mono<ResponseEntity<String>> handleNumberFormat(NumberFormatException exception) {
-    return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Wrong format request."));
+  public Mono<ResponseEntity<Map<String, Object>>> handleNumberFormat(NumberFormatException exception) {
+    return buildErrorResponse(HttpStatus.BAD_REQUEST, "Error: Wrong format request.");
   }
 
   @ExceptionHandler(InvalidKeyException.class)
-  public Mono<ResponseEntity<String>> handleInvalidKey(InvalidKeyException exception) {
-    return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Invalid information."));
+  public Mono<ResponseEntity<Map<String, Object>>> handleInvalidKey(InvalidKeyException exception) {
+    return buildErrorResponse(HttpStatus.BAD_REQUEST, "Error: Invalid information.");
   }
 
   @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-  public Mono<ResponseEntity<String>> handleSQLIntegrityConstraintViolation(
+  public Mono<ResponseEntity<Map<String, Object>>> handleSQLIntegrityConstraintViolation(
       SQLIntegrityConstraintViolationException exception) {
-    return Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Not valid information."));
+    return buildErrorResponse(HttpStatus.BAD_REQUEST, "Error: Not valid information.");
   }
 
   @ExceptionHandler(NoSuchAlgorithmException.class)
-  public Mono<ResponseEntity<String>> handleNoSuchAlgorithm(NoSuchAlgorithmException exception) {
-    return Mono.just(ResponseEntity.status(HttpStatus.NO_CONTENT).body("Error: Suitable information not found."));
+  public Mono<ResponseEntity<Map<String, Object>>> handleNoSuchAlgorithm(NoSuchAlgorithmException exception) {
+    return buildErrorResponse(HttpStatus.NO_CONTENT, "Error: Suitable information not found.");
   }
 
   @ExceptionHandler(NoSuchPaddingException.class)
-  public Mono<ResponseEntity<String>> handleNoSuchPadding(NoSuchPaddingException exception) {
-    return Mono.just(ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Error: Not such information."));
+  public Mono<ResponseEntity<Map<String, Object>>> handleNoSuchPadding(NoSuchPaddingException exception) {
+    return buildErrorResponse(HttpStatus.NOT_ACCEPTABLE, "Error: Not such information.");
   }
 
   @ExceptionHandler(IllegalBlockSizeException.class)
-  public Mono<ResponseEntity<String>> handleIllegalBlockSize(IllegalBlockSizeException exception) {
-    return Mono.just(ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Error: Illegal size."));
+  public Mono<ResponseEntity<Map<String, Object>>> handleIllegalBlockSize(IllegalBlockSizeException exception) {
+    return buildErrorResponse(HttpStatus.NOT_ACCEPTABLE, "Error: Illegal size.");
   }
 
   @ExceptionHandler(BadPaddingException.class)
-  public Mono<ResponseEntity<String>> handleBadPadding(BadPaddingException exception) {
-    return Mono.just(ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Error: Bad Pad information."));
+  public Mono<ResponseEntity<Map<String, Object>>> handleBadPadding(BadPaddingException exception) {
+    return buildErrorResponse(HttpStatus.NOT_ACCEPTABLE, "Error: Bad Pad information.");
+  }
+
+  @ExceptionHandler(Exception.class)
+  public Mono<ResponseEntity<Map<String, Object>>> handleGenericException(Exception exception) {
+    return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Ocurrió un error inesperado.");
+  }
+
+  private Mono<ResponseEntity<Map<String, Object>>> buildErrorResponse(HttpStatus status, String message) {
+    return Mono.just(ResponseEntity.status(status).body(ResponseException.createApiException(false, message, null)));
   }
 }

@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.8'
 
 services:
   
@@ -6,6 +6,9 @@ services:
     image: postgres:17.2
     container_name: bd-swing
     restart: always
+    volumes:
+      - ./src/main/resources/db.migration/tables.sql:/docker-entrypoint-initdb.d/create-table.sql
+      - ./src/main/resources/db.migration/data.sql:/docker-entrypoint-initdb.d/data.sql
     environment:
       - POSTGRES_DB=bd_swing
       - POSTGRES_USER=admin

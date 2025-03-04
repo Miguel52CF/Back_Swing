@@ -2,16 +2,20 @@ package com.back_swing.back_swing.core.SubjectStudent;
 
 import org.springframework.data.relational.core.mapping.Table;
 
+import com.back_swing.back_swing.base.BaseModel;
+
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table("subject_students")
-public class SubjectStudent {
+public class SubjectStudent extends BaseModel{
 
   @NotNull
   private Long subjectId;

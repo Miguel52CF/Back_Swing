@@ -2,18 +2,16 @@ package com.back_swing.back_swing.base;
 
 import java.time.Instant;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Column;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+@NoArgsConstructor
 public abstract class BaseModel {
 
   @Id
@@ -21,11 +19,9 @@ public abstract class BaseModel {
 
   private boolean active = true;
 
-  @CreatedDate
   @Column("created_at")
   private Instant createdAt;
 
-  @LastModifiedDate
   @Column("updated_at")
   private Instant updatedAt;
 }
