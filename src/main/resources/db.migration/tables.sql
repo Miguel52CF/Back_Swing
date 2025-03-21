@@ -85,6 +85,13 @@ CREATE TABLE
     IF NOT EXISTS Users (
         id serial NOT NULL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
+        last_name VARCHAR(255) NOT NULL,
+        user_name VARCHAR(50) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        phone INT(9),
+        password VARCHAR(255) NOT NULL,
+        birth_date DATE,
+        dni INT(8),
         role_id INT,
         grade_id INT,
         schedule_type_id INT,
